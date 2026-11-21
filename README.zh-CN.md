@@ -1,5 +1,9 @@
 # CJK Text Kit for Godot 4
 
+[![Godot](https://img.shields.io/badge/godot-4.7.2%2B-blue)](https://godotengine.org)
+[![License](https://img.shields.io/badge/license-commercial%20EULA-orange)](addons/cjk_text/LICENSE.md)
+[![Release](https://img.shields.io/badge/release-v1.0.0-brightgreen)](https://github.com/Heand-Broken/cjk-text-kit/releases/tag/v1.0.0)
+
 **Godot 从未提供的 CJK 排版层。**
 
 一个面向中、日、韩游戏开发者的文本控件，补上引擎缺失的排版能力：带
@@ -10,6 +14,15 @@
 
 > 完整英文文档见 [`addons/cjk_text/README.md`](addons/cjk_text/README.md)。
 > 本文件是给中文使用者的快速说明。
+
+---
+
+## 下载
+
+* **插件** — [`cjk-text-kit-v1.0.0.zip`](https://github.com/Heand-Broken/cjk-text-kit/releases/download/v1.0.0/cjk-text-kit-v1.0.0.zip)
+* **可运行 demo** — [`cjk-text-kit-demo-v1.0.0.zip`](https://github.com/Heand-Broken/cjk-text-kit/releases/download/v1.0.0/cjk-text-kit-demo-v1.0.0.zip)
+
+itch.io 上架中。
 
 ---
 

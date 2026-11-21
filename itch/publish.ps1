@@ -96,6 +96,27 @@ if ($LASTEXITCODE -ne 0) {
     exit $LASTEXITCODE
 }
 
+# --- 5. verify --------------------------------------------------------------
+
+Write-Step "Verifying the upload"
+try {
+    $parts = $Project -split "/"
+    $user = $parts[0]
+    $slug = $parts[1]
+    $uri = "https://itch.io/api/1/$user/$slug/uploads?api_key=$key"
+    $uploads = Invoke-RestMethod -Uri $uri -TimeoutSec 60
+    if ($uploads -and $uploads.Count -gt 0) {
+        foreach ($upload in $uploads) {
+            Write-Ok ("{0}  {1:N1} KB" -f $upload.filename, ($upload.size / 1KB))
+        }
+    } else {
+        Write-Warn "the API reported no uploads yet. Refresh the page in a moment."
+    }
+} catch {
+    Write-Warn "could not verify through the API: $($_.Exception.Message)"
+    Write-Warn "check the project page manually instead."
+}
+
 Write-Host @"
 
 Uploaded. Next on the website:

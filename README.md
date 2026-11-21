@@ -1,5 +1,9 @@
 # CJK Text Kit for Godot 4
 
+[![Godot](https://img.shields.io/badge/godot-4.7.2%2B-blue)](https://godotengine.org)
+[![License](https://img.shields.io/badge/license-commercial%20EULA-orange)](addons/cjk_text/LICENSE.md)
+[![Release](https://img.shields.io/badge/release-v1.0.0-brightgreen)](https://github.com/Heand-Broken/cjk-text-kit/releases/tag/v1.0.0)
+
 **The CJK typography layer Godot never shipped.**
 
 A text control for Chinese, Japanese and Korean games that adds the parts
@@ -12,6 +16,15 @@ squeezing for adjacent punctuation.
 > The user-facing documentation lives in
 > [`addons/cjk_text/README.md`](addons/cjk_text/README.md). This file
 > describes the repository layout and the development workflow.
+
+---
+
+## Download
+
+* **Plugin** — [`cjk-text-kit-v1.0.0.zip`](https://github.com/Heand-Broken/cjk-text-kit/releases/download/v1.0.0/cjk-text-kit-v1.0.0.zip)
+* **Runnable demo** — [`cjk-text-kit-demo-v1.0.0.zip`](https://github.com/Heand-Broken/cjk-text-kit/releases/download/v1.0.0/cjk-text-kit-demo-v1.0.0.zip)
+
+Also available on itch.io.
 
 ---
 

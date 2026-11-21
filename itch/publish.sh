@@ -82,6 +82,22 @@ fi
 step "Pushing to itch.io ($PROJECT)"
 "$BUTLER" push "$PROJECT" "$DIST" --api-key "$ITCH_API_KEY"
 
+# --- 5. verify --------------------------------------------------------------
+
+step "Verifying the upload"
+USER_PART="${PROJECT%%/*}"
+SLUG_PART="${PROJECT#*/}"
+if command -v curl >/dev/null 2>&1; then
+  RESPONSE="$(curl -s --max-time 60 "https://itch.io/api/1/${USER_PART}/${SLUG_PART}/uploads?api_key=${ITCH_API_KEY}" || true)"
+  if printf '%s' "$RESPONSE" | grep -q '"filename"'; then
+    printf '%s' "$RESPONSE" | grep -o '"filename":"[^"]*"' | sed 's/.*:"//; s/"//' | sed 's/^/    /'
+  else
+    warn "the API did not list the uploads yet. Refresh the page in a moment."
+  fi
+else
+  warn "curl is not available, skipping the verification step."
+fi
+
 cat <<'EOF'
 
 Uploaded. Next on the website:
