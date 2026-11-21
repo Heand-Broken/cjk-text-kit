@@ -7,6 +7,9 @@ export_presets.cfg
 # Godot 4.4+ script UIDs are part of the source and are committed.
 # The .import files are local artifacts and are ignored.
 
+# Locally fetched tooling (butler binary)
+tools/butler/
+
 # Build artefacts
 dist/
 docs/gif/frames/

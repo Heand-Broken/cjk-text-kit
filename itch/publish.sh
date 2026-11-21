@@ -100,7 +100,11 @@ fi
 # --- 4. push ----------------------------------------------------------------
 
 step "Pushing to itch.io ($PROJECT)"
-"$BUTLER" push "$PROJECT" "$DIST" --api-key "$ITCH_API_KEY"
+# butler takes the source directory first and the target second:
+#   butler push <src> <target>
+# The API key is passed through the environment, because butler's push
+# command does not accept an --api-key flag.
+BUTLER_API_KEY="$ITCH_API_KEY" "$BUTLER" push "$DIST" "$PROJECT" --assume-yes
 
 # --- 5. verify --------------------------------------------------------------
 

@@ -145,7 +145,16 @@ if ((Get-ChildItem $Dist -File).Count -eq 0) {
 # --- 4. push ----------------------------------------------------------------
 
 Write-Step "Pushing to itch.io ($Project)"
-& $Butler push $Project $Dist --api-key $key
+# butler takes the source directory first and the target second:
+#   butler push <src> <target>
+# The API key is passed through the environment, because butler's push
+# command does not accept an --api-key flag.
+$env:BUTLER_API_KEY = $key
+try {
+    & $Butler push $Dist $Project --assume-yes
+} finally {
+    Remove-Item Env:\BUTLER_API_KEY -ErrorAction SilentlyContinue
+}
 if ($LASTEXITCODE -ne 0) {
     Write-Warn "butler push failed with exit code $LASTEXITCODE"
     exit $LASTEXITCODE

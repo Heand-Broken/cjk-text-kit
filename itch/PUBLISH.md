@@ -69,6 +69,30 @@ API key 读取顺序：环境变量 `ITCH_API_KEY` → `itch/api_key.txt`。
 > 如果 `butler` 报 "project not found"，先在网站上建一个空项目，
 > 名字填 `cjk-text-kit`，可见性设为 **Draft**，保存后再跑上传。
 
+### ⚠️ 项目类型必须选 **Asset**，不能选 Game
+
+这是最容易卡住的一步。itch.io 的项目类型决定 butler 用哪套上传协议：
+
+| 项目类型 | butler 用法 | 页面上的表现 |
+|---|---|---|
+| **Asset**（工具 / 素材） | `butler push <目录> 用户名/项目名` | 每个文件是一个独立的可下载项 ✅ |
+| Game | `butler push <目录> 用户名/项目名:windows` | 一个"构建版本"，页面只显示一个下载按钮 ❌ |
+
+本插件要卖的是两个 zip，必须选 **Asset**。选错会得到
+`invalid spec: 用户名/项目名, missing channel` 这个报错。
+
+### 附：butler 的关键用法（已实测）
+
+```bash
+# 参数顺序是 <src> <target>，src 在前
+BUTLER_API_KEY=<你的key> butler push <本地目录> 用户名/项目名 --assume-yes
+```
+
+* `butler push` **不接受 `--api-key` 参数**，key 必须走 `BUTLER_API_KEY`
+  环境变量或 `-i <identity文件>`。
+* 项目不存在时会报 `invalid spec`；key 错误时报
+  `itch.io API error (403): /wharf/builds: invalid key`。两者含义不同。
+
 ## 3. 填写页面
 
 打开 `https://itch.io/你的用户名/cjk-text-kit`：
