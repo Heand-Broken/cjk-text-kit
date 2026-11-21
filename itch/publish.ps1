@@ -77,6 +77,25 @@ if ([string]::IsNullOrWhiteSpace($Butler)) {
 }
 
 if ([string]::IsNullOrWhiteSpace($Butler)) {
+    Write-Warn "Fetching butler directly from its GitHub release instead..."
+    $butlerDir = Join-Path $Root "tools\butler"
+    $zip = Join-Path $env:TEMP "butler-windows-amd64.zip"
+    $url = "https://github.com/itchio/butler/releases/latest/download/butler-windows-amd64.zip"
+    try {
+        Invoke-WebRequest -Uri $url -OutFile $zip -TimeoutSec 300 -UseBasicParsing
+        New-Item -ItemType Directory -Force -Path $butlerDir | Out-Null
+        Expand-Archive -Path $zip -DestinationPath $butlerDir -Force
+        $found = Get-ChildItem -Path $butlerDir -Filter "butler*.exe" -Recurse | Select-Object -First 1
+        if ($found) {
+            $Butler = $found.FullName
+            Write-Ok "downloaded to $Butler"
+        }
+    } catch {
+        Write-Warn "could not download butler: $($_.Exception.Message)"
+    }
+}
+
+if ([string]::IsNullOrWhiteSpace($Butler)) {
     Write-Warn "butler is still missing. Install it with one of:"
     Write-Warn "  winget install itchio.butler"
     Write-Warn "  or download https://itch.io/docs/butler/ and put butler.exe on your PATH"

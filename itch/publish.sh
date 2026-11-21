@@ -36,7 +36,27 @@ if [ -z "$BUTLER" ]; then
 fi
 
 if [ -z "$BUTLER" ]; then
-  warn "butler was not found. Install it with one of:"
+  warn "butler was not found. Fetching it from its GitHub release instead..."
+  BUTLER_DIR="$ROOT/tools/butler"
+  BUTLER_ZIP="${TMPDIR:-/tmp}/butler-windows-amd64.zip"
+  BUTLER_URL="https://github.com/itchio/butler/releases/latest/download/butler-windows-amd64.zip"
+  if command -v curl >/dev/null 2>&1 && curl -sL --max-time 300 -o "$BUTLER_ZIP" "$BUTLER_URL"; then
+    mkdir -p "$BUTLER_DIR"
+    if command -v unzip >/dev/null 2>&1; then
+      unzip -o -q "$BUTLER_ZIP" -d "$BUTLER_DIR" && ok "downloaded butler"
+    fi
+    FOUND="$(find "$BUTLER_DIR" -name 'butler*' -type f 2>/dev/null | head -1)"
+    if [ -n "$FOUND" ]; then
+      BUTLER="$FOUND"
+      chmod +x "$BUTLER" 2>/dev/null || true
+    fi
+  else
+    warn "could not download butler."
+  fi
+fi
+
+if [ -z "$BUTLER" ]; then
+  warn "butler is still missing. Install it with one of:"
   warn "  winget install itchio.butler"
   warn "  brew install itchio/butler/butler"
   warn "  or download https://itch.io/docs/butler/ and put the binary on your PATH"

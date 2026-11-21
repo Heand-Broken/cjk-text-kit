@@ -56,8 +56,9 @@ dist/cjk-text-kit-demo-v1.0.0.zip   可直接运行的 demo 工程
 .\itch\publish.ps1 -Project 你的用户名/cjk-text-kit
 ```
 
-脚本会自动打包、尝试用 winget 安装 butler、推送两个 zip，并通过 itch API
-校验上传结果（列出已上传文件）。若 butler 仍缺失，它会打印安装命令。
+脚本会自动打包、**获取 butler**（依次尝试 PATH → 本地 tools/butler → winget →
+从 butler 官方 GitHub Release 下载）、推送两个 zip，并通过 itch API 校验
+上传结果（列出已上传文件）。
 
 或双击 `itch\publish.bat` 后按提示输入 `用户名/cjk-text-kit`。
 Git Bash / macOS / Linux 用 `./itch/publish.sh 用户名/cjk-text-kit`。
