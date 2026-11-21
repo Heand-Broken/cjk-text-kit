@@ -1,0 +1,28 @@
+; Engine configuration file for the CJK Text Kit demo project.
+;
+; The demo doubles as the development harness for the addon. It is not part
+; of the shipped plugin package.
+
+config_version=5
+
+[application]
+
+config/name="CJK Text Kit — Demo"
+config/description="CJK-aware text control for Godot 4"
+run/main_scene="res://demo/demo.tscn"
+config/features=PackedStringArray("4.7", "GL Compatibility")
+
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=800
+window/stretch/mode="canvas_items"
+
+[gui]
+
+theme/default_font_multichannel_signed_distance_field=false
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"

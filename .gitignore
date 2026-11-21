@@ -1,0 +1,22 @@
+# Godot
+.godot/
+.import/
+export.cfg
+export_presets.cfg
+
+# Godot 4.4+ script UIDs are part of the source and are committed.
+# The .import files are local artifacts and are ignored.
+
+# Build artefacts
+dist/
+docs/gif/frames/
+__pycache__/
+*.pyc
+
+# itch.io credentials — never commit
+itch/api_key.txt
+
+# OS noise
+.DS_Store
+Thumbs.db
+desktop.ini
