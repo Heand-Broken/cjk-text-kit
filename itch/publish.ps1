@@ -27,6 +27,28 @@ function Write-Step($message) { Write-Host "`n==> $message" -ForegroundColor Cya
 function Write-Ok($message) { Write-Host "    $message" -ForegroundColor DarkGray }
 function Write-Warn($message) { Write-Host "    $message" -ForegroundColor Yellow }
 
+# --- 0. package -------------------------------------------------------------
+
+Write-Step "Packaging the release archives"
+$packager = Join-Path $Root "tools\package_release.py"
+if (Test-Path $packager) {
+    Push-Location $Root
+    try {
+        python $packager
+        if ($LASTEXITCODE -eq 0) {
+            Write-Ok "archives are up to date"
+        } else {
+            Write-Warn "packaging failed with exit code $LASTEXITCODE, continuing with whatever is in dist\"
+        }
+    } catch {
+        Write-Warn "could not run the packager: $($_.Exception.Message)"
+    } finally {
+        Pop-Location
+    }
+} else {
+    Write-Warn "packager not found, using the archives already in dist\"
+}
+
 # --- 1. butler ---------------------------------------------------------------
 
 Write-Step "Locating butler"
@@ -41,7 +63,21 @@ if ([string]::IsNullOrWhiteSpace($Butler)) {
 }
 
 if ([string]::IsNullOrWhiteSpace($Butler)) {
-    Write-Warn "butler was not found. Install it with one of:"
+    Write-Warn "butler was not found. Trying to install it with winget..."
+    try {
+        winget install --id itchio.butler --accept-source-agreements --accept-package-agreements | Out-Null
+        $command = Get-Command butler -ErrorAction SilentlyContinue
+        if ($command) {
+            $Butler = $command.Source
+            Write-Ok "installed via winget"
+        }
+    } catch {
+        Write-Warn "winget could not install butler automatically."
+    }
+}
+
+if ([string]::IsNullOrWhiteSpace($Butler)) {
+    Write-Warn "butler is still missing. Install it with one of:"
     Write-Warn "  winget install itchio.butler"
     Write-Warn "  or download https://itch.io/docs/butler/ and put butler.exe on your PATH"
     exit 1

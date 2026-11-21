@@ -125,6 +125,12 @@ One licence per developer. Unlimited commercial and non-commercial projects.
 No royalties, no revenue caps, no seat fees. Compiled games can be sold on
 any platform without attribution.
 
+### 🔗 Source
+
+The full source is public on GitHub, with the test suite and the scripts
+that produce the measurements above:
+<https://github.com/Heand-Broken/cjk-text-kit>
+
 ### 🗺️ Roadmap
 
 * Vertical text (縦書き). The engine's text server reports

@@ -50,15 +50,20 @@ dist/cjk-text-kit-demo-v1.0.0.zip   可直接运行的 demo 工程
 
 ## 2. 上传文件
 
+**一条命令完成打包 → 装 butler → 上传 → 校验：**
+
 ```powershell
 .\itch\publish.ps1 -Project 你的用户名/cjk-text-kit
 ```
 
-或者双击 `itch\publish.bat` 后按提示输入 `用户名/cjk-text-kit`。
+脚本会自动打包、尝试用 winget 安装 butler、推送两个 zip，并通过 itch API
+校验上传结果（列出已上传文件）。若 butler 仍缺失，它会打印安装命令。
+
+或双击 `itch\publish.bat` 后按提示输入 `用户名/cjk-text-kit`。
 Git Bash / macOS / Linux 用 `./itch/publish.sh 用户名/cjk-text-kit`。
 
 API key 读取顺序：环境变量 `ITCH_API_KEY` → `itch/api_key.txt`。
-建议把 key 写进 `itch/api_key.txt`（该文件不要提交到版本库）。
+建议把 key 写进 `itch/api_key.txt`（该文件已在 `.gitignore` 中，不会入库）。
 
 > 如果 `butler` 报 "project not found"，先在网站上建一个空项目，
 > 名字填 `cjk-text-kit`，可见性设为 **Draft**，保存后再跑上传。
